@@ -1,0 +1,65 @@
+{
+  "name": "rest-api",
+  "version": "0.1.0",
+  "description": "REST API",
+  "main": "./dest/index.js",
+  "scripts": {
+    "start": "node ./dest/index.js",
+    "build": "npm run tsc",
+    "dev": "npm run build && npm run start",
+    "pretest": "npm run clean && npm run tsc",
+    "test": "ava --no-cache --verbose dest/**/*.test.js",
+    "posttest": "npm run clean-test-code",
+    "tsc": "tsc",
+    "tscw": "tsc -w",
+    "preversion": "npm run tsc",
+    "postversion": "git push --follow-tags",
+    "prepublishOnly": "npm run tsc && npm run clean-test-code",
+    "clean": "rimraf ./dest && rimraf ./types",
+    "clean-test-code": "rimraf ./dest/**/*.test.js && rimraf ./types/**/*.test.d.ts"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mitica/ebs-test.git"
+  },
+  "keywords": [
+    "api",
+    "rest-api",
+    "test"
+  ],
+  "author": "Dumitru Cantea",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Mitica/ebs-test/issues"
+  },
+  "homepage": "https://github.com/Mitica/ebs-test#readme",
+  "devDependencies": {
+    "@types/body-parser": "^1.17.0",
+    "@types/boom": "^7.2.0",
+    "@types/cors": "^2.8.4",
+    "@types/dotenv": "^4.0.3",
+    "@types/express": "^4.16.0",
+    "@types/express-jwt": "0.0.40",
+    "@types/ms": "^0.7.30",
+    "@types/node": "latest",
+    "ava": "^0.23.0",
+    "rimraf": "^2.6.2",
+    "typescript": "latest"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "boom": "^7.2.0",
+    "cors": "^2.8.4",
+    "dotenv": "^6.0.0",
+    "express": "^4.16.3",
+    "express-jwt": "^5.3.1",
+    "jwks-rsa": "^1.2.1",
+    "ms": "^2.1.1",
+    "test-data": "file:../data",
+    "test-domain": "file:../domain",
+    "winston": "^3.0.0"
+  }
+}

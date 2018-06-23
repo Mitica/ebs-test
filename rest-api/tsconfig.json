@@ -1,0 +1,28 @@
+{
+    "compilerOptions": {
+        "forceConsistentCasingInFileNames": true,
+        "module": "commonjs",
+        "outDir": "dest",
+        "rootDir": "./src",
+        "target": "es6",
+        "noImplicitAny": true,
+        "removeComments": true,
+        "preserveConstEnums": true,
+        "sourceMap": false,
+        "moduleResolution": "node",
+        "declaration": false,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "allowJs": false,
+        "noImplicitReturns": true,
+        "strictNullChecks": true,
+        "strict": true
+    },
+    "formatCodeOptions": {
+        "indentSize": 2,
+        "tabSize": 2
+    },
+    "include": [
+        "src/**/*.ts"
+    ]
+}
