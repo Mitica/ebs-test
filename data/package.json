@@ -1,0 +1,50 @@
+{
+  "name": "test-data",
+  "version": "0.1.0",
+  "description": "Data module",
+  "main": "./dest/index.js",
+  "types": "./types/index.d.ts",
+  "scripts": {
+    "pretest": "npm run clean && npm run tsc",
+    "test": "ava --no-cache --verbose dest/**/*.test.js",
+    "posttest": "npm run clean-test-code",
+    "tsc": "tsc",
+    "tscw": "tsc -w",
+    "preversion": "npm run tsc",
+    "postversion": "git push --follow-tags",
+    "prepublishOnly": "npm run tsc && npm run clean-test-code",
+    "clean": "rimraf ./dest && rimraf ./types",
+    "clean-test-code": "rimraf ./dest/**/*.test.js && rimraf ./types/**/*.test.d.ts"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mitica/ebs-test.git"
+  },
+  "keywords": [
+    "data",
+    "ebs",
+    "test"
+  ],
+  "author": "Dumitru Cantea",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Mitica/ebs-test/issues"
+  },
+  "homepage": "https://github.com/Mitica/ebs-test#readme",
+  "devDependencies": {
+    "@types/boom": "^7.2.0",
+    "@types/node": "latest",
+    "ava": "^0.23.0",
+    "rimraf": "^2.6.2",
+    "typescript": "latest"
+  },
+  "dependencies": {
+    "@types/mongoose": "^5.0.10",
+    "boom": "^7.2.0",
+    "mongoose": "^5.0.15",
+    "test-domain": "file:../domain"
+  }
+}

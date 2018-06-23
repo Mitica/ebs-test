@@ -1,0 +1,29 @@
+{
+  "name": "ebs-test",
+  "version": "0.1.0",
+  "description": "EBS test",
+  "scripts": {
+    "test": "cd ./domain && npm run test"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mitica/ebs-test.git"
+  },
+  "keywords": [
+    "ebs-test",
+    "test"
+  ],
+  "author": "Dumitru Cantea",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Mitica/ebs-test/issues"
+  },
+  "homepage": "https://github.com/Mitica/ebs-test#readme",
+  "devDependencies": {
+  },
+  "dependencies": {
+  }
+}
