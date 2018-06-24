@@ -1,0 +1,16 @@
+extends ./layouts/root
+
+block content
+  #users-app(data-base-url=config.apiBaseUrl, data-token=user.token)
+  script(type='v-template')#users-template
+    div
+      h2 Users
+      ul.c-users
+        li.c-users__item(v-for="item in users")
+          h3 {{ item.email }}
+            sup {{ item.role }}
+
+block scripts
+  script(type='text/javascript', async, src="/static/js/users.js")
+
+        

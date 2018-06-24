@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node ./lib/app.js",
     "dev": "tsc && node ./lib/app.js",
-    "build": "gulp prod && npm run browserify && npm run tsc",
+    "build": "npm run tsc && gulp prod && npm run browserify",
     "pretest": "npm run clean && npm run tsc",
     "test": "ava --no-cache --verbose  ./lib/*.test.js ./lib/**/*.test.js",
     "posttest": "npm run clean-test-code",
@@ -13,7 +13,7 @@
     "tscw": "tsc -w",
     "preversion": "npm run tsc",
     "postversion": "git push --follow-tags",
-    "browserify": "browserify ./assets/js/articles.js -o ./public/static/js/articles.js"
+    "browserify": "browserify ./assets/js/articles.js -o ./public/static/js/articles.js && browserify ./assets/js/users.js -o ./public/static/js/users.js"
   },
   "engines": {
     "node": ">=6.0.0"

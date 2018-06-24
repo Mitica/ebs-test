@@ -23,6 +23,7 @@ router.get('/', function (req: Request, res: Response) {
 
 router.get('/admin', function (req: Request, res: Response) {
     const user = req.user as ApiUser;
+
     if (!user || user.role !== 'admin') {
         return res.redirect('/login');
     }

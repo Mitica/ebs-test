@@ -24,6 +24,10 @@ export class ApiClient {
         return this.request<ApiUser>('/auth/register', 'POST', data);
     }
 
+    users() {
+        return this.request<ApiUser>('/users', 'GET');
+    }
+
     articles() {
         return this.request<ApiArticle>('/articles', 'GET');
     }
