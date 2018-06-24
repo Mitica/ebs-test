@@ -95,6 +95,8 @@ export class MongoModel<T> {
 
 
     protected beforeCreating(data: T) {
+        const ndata: any = data;
+        ndata._id = ndata._id || ndata.id;
         return data;
     }
 

@@ -44,7 +44,7 @@ const ModelSchema = new Schema({
     email: {
         type: String,
         required: true,
-        uppercase: true,
+        lowercase: true,
         unique: true,
         validate: [isEmail, 'Invalid email'],
     },

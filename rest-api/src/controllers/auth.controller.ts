@@ -9,11 +9,10 @@ import { notFound } from 'boom';
 
 
 export async function registerUserController(req: Request, res: Response) {
-    const inputData = InputUser.fromRequest(req);
-
-    inputData.id = UserHelpers.newId();
+    let inputData = InputUser.fromRequest(req);
 
     try {
+        inputData = UserHelpers.buildForCreate(inputData);
         const user = await userModel.create(inputData);
         user.token = jwtSign(user);
         sendResponse(res, 201, user);
@@ -23,14 +22,14 @@ export async function registerUserController(req: Request, res: Response) {
 }
 
 export async function loginUserController(req: Request, res: Response, next: NextFunction) {
-    const inputData = InputUser.fromRequest(req);
+    let inputData = InputUser.fromRequest(req);
 
     try {
         let user: User | null;
         if (inputData.facebookId) {
             user = await userModel.one({ where: { facebookId: inputData.facebookId } });
             if (!user) {
-                inputData.id = UserHelpers.newId();
+                inputData = UserHelpers.buildForCreate(inputData);
                 user = await userModel.create(inputData);
             }
         } else {
