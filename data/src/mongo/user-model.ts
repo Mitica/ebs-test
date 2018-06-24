@@ -66,7 +66,6 @@ const ModelSchema = new Schema({
 
     facebookId: {
         type: String,
-        unique: true,
     },
 
     createdAt: {
