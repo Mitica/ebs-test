@@ -10,8 +10,8 @@ block content
           h3 {{ item.title }}
           p {{ item.body }}
           ul.c-counts
-            li.c-counts-up(v-on:click="vote(item, 'UP')") {{item.countUpVotes}}
-            li.c-counts-down(v-on:click="vote(item, 'DOWN')") {{item.countDownVotes}}
+            li.c-counts-up(v-on:click="vote(item, 'UP')") ▲ {{item.countUpVotes}}
+            li.c-counts-down(v-on:click="vote(item, 'DOWN')") ▼ {{item.countDownVotes}}
       br
       br
       h3 Create a new article

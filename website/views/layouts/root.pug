@@ -19,6 +19,9 @@ html(lang='en')
           a(href='/') Home
         li
           a(href='/admin') Admin
+        if (user)
+          li
+            a(href='/logout') Logout
     #page-main
       .container
         .c-content

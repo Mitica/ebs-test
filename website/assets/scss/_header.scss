@@ -1,0 +1,19 @@
+
+#page-header {
+    padding: 10px;
+    text-align: center;
+    background: $accent-color;
+    margin-bottom: 40px;
+}
+
+#menu {
+    margin:0px;
+    padding:0px;
+    list-style: none;
+    font-weight: bold;
+    font-size: 110%;
+    li {
+        display: inline-block;
+        padding: 2px 10px;
+    }
+}

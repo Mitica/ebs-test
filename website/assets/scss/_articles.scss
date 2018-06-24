@@ -1,0 +1,25 @@
+
+.c-articles {
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+    margin-bottom: 20px;
+}
+.c-articles__item {
+    padding: 6px;
+    border-bottom: 1px solid #ddd;
+}
+
+.c-counts {
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+    li {
+        display: inline-block;
+        cursor: pointer;
+        padding: 2px 4px;
+        background: #eee;
+        border-radius: 2px;
+        margin-right: 10px;
+    }
+}
