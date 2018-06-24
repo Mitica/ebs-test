@@ -7,6 +7,7 @@ export { UserModel } from './mongo/user-model';
 
 export { ArticleRepository } from './article-repository';
 export { ArticleVoteRepository } from './article-vote-repository';
+export { UserRepository } from './user-repository';
 
 export function createConnection(uri: string): Connection {
     return mongoCreateConnection(uri);
