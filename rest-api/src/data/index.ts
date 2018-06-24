@@ -14,6 +14,7 @@ import {
     ArticleRepository,
     ArticleVoteRepository,
     UserModel,
+    UserRepository,
 } from 'test-data';
 
 const connection = createConnection(process.env.DB_CONNECTION_URI);
@@ -24,6 +25,7 @@ export const userModel = new UserModel(connection);
 
 export const articleRepository = new ArticleRepository(articleModel);
 export const articleVoteRepository = new ArticleVoteRepository(articleVoteModel);
+export const userRepository = new UserRepository(userModel);
 
 export const voteArticleUseCase = new VoteArticleUseCase(articleRepository, articleVoteRepository);
 

@@ -1,6 +1,6 @@
 
 import { Response, Request, NextFunction } from 'express';
-import { userModel } from '../data';
+import { userModel, userRepository } from '../data';
 import catchError from '../catch';
 import { sendResponse, jwtSign } from '../helpers';
 import { InputUser } from '../entities/input-user';
@@ -27,10 +27,15 @@ export async function loginUserController(req: Request, res: Response, next: Nex
     try {
         let user: User | null;
         if (inputData.facebookId) {
-            user = await userModel.one({ where: { facebookId: inputData.facebookId } });
+            user = await userRepository.getByFacebookId(inputData.facebookId);
             if (!user) {
-                inputData = UserHelpers.buildForCreate(inputData);
-                user = await userModel.create(inputData);
+                user = await userRepository.getByEmail(inputData.email as string);
+                if (!user) {
+                    inputData = UserHelpers.buildForCreate(inputData);
+                    user = await userModel.create(inputData);
+                } else {
+                    user = await userRepository.update({ id: user.id, facebookId: inputData.facebookId });
+                }
             }
         } else {
             user = await userModel.one({ where: { email: inputData.email, password: inputData.password } });
