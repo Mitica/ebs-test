@@ -17,8 +17,8 @@ export const authenticateUser = (req: Request, res: Response, next: NextFunction
     })
 }
 
-export const isAdmin = (req: Request, _res: Response, next: NextFunction) => {
-    const user = getRequestUser(req);
+export const isAdmin = async (req: Request, _res: Response, next: NextFunction) => {
+    const user = await getRequestUser(req);
     if (!user || user.role !== UserRole.ADMIN) {
         return next(unauthorized())
     }

@@ -8,7 +8,7 @@ import { sendResponse } from '../helpers';
 import { InputArticleVote } from '../entities/input-article-vote';
 
 export async function voteArticleController(req: Request, res: Response) {
-    const inputData = InputArticleVote.fromRequest(req);
+    const inputData = await InputArticleVote.fromRequest(req);
 
     try {
         const result = await voteArticleUseCase.execute(inputData);
@@ -19,7 +19,7 @@ export async function voteArticleController(req: Request, res: Response) {
 }
 
 export async function createArticleController(req: Request, res: Response) {
-    const articleData = InputArticle.fromRequest(req);
+    const articleData = await InputArticle.fromRequest(req);
 
     articleData.id = ArticleHelpers.newId();
 

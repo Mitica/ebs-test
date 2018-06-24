@@ -3,8 +3,8 @@ import { CreatingArticleVote } from 'test-domain';
 import { getRequestUser } from "../helpers";
 
 export class InputArticleVote {
-    static fromRequest(req: Request) {
-        const user = getRequestUser(req);
+    static async fromRequest(req: Request) {
+        const user = await getRequestUser(req);
 
         const input: CreatingArticleVote = {
             articleId: req.params.articleId || req.params.id,

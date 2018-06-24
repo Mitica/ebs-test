@@ -8,7 +8,7 @@ import { UserHelpers } from 'test-domain';
 
 export async function getMeController(req: Request, res: Response) {
     try {
-        const user = getRequestUser(req);
+        const user = await getRequestUser(req);
         sendResponse(res, 200, user);
     } catch (e) {
         catchError(req, res, e);

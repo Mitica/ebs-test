@@ -8,16 +8,13 @@ const JWT_SECRET: string = process.env.JWT_SECRET;
 import { Request, Response } from "express";
 import { User } from 'test-domain';
 import * as jwt from 'express-jwt';
-import { sign, decode } from 'jsonwebtoken';
+import { sign } from 'jsonwebtoken';
+import { userModel } from "./data";
 
 export const jwtHandler = jwt({ secret: JWT_SECRET });
 
 export function jwtSign(user: User) {
-    return sign(JSON.stringify(user), JWT_SECRET as string);
-}
-
-export function jwtDecode(token: string) {
-    return decode(token, { json: true });
+    return sign(user.id, JWT_SECRET as string);
 }
 
 export function sendResponse(res: Response, statusCode: number, data?: any) {
@@ -28,8 +25,10 @@ export function sendResponse(res: Response, statusCode: number, data?: any) {
     res.end();
 }
 
-export function getRequestUser(req: Request): User {
-    // console.log('user', req.user, req.headers)
+export async function getRequestUser(req: Request): Promise<User> {
+    if (typeof req.user === 'string') {
+        return await userModel.one({ where: { _id: req.user } }) as User;
+    }
     return req.user as User;
 }
 
