@@ -5,6 +5,6 @@ import authRouter from './auth';
 
 export function mountRoutes(app: Application) {
     app.use('/auth', authRouter);
-    app.use('/api', apiArticleRouter);
-    app.use('/api', apiUserRouter);
+    app.use(apiArticleRouter);
+    app.use(apiUserRouter);
 }

@@ -2,10 +2,18 @@
 import { Response, Request } from 'express';
 import { userModel } from '../data';
 import catchError from '../catch';
-import { sendResponse, jwtSign } from '../helpers';
+import { sendResponse, jwtSign, getRequestUser } from '../helpers';
 import { InputUser } from '../entities/input-user';
 import { UserHelpers } from 'test-domain';
 
+export async function getMeController(req: Request, res: Response) {
+    try {
+        const user = getRequestUser(req);
+        sendResponse(res, 200, user);
+    } catch (e) {
+        catchError(req, res, e);
+    }
+}
 
 export async function getUsersController(req: Request, res: Response) {
     try {

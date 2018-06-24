@@ -26,7 +26,6 @@ export class VoteArticleUseCase extends BaseUseCase<CreatingArticleVote, VoteArt
         }
 
         let counts = await this.articleGateway.getArticleCounts(data.articleId);
-
         const voteId = ArticleVoteHelpers.createId(data);
 
         let vote = await this.voteGateway.getById(voteId);
@@ -35,7 +34,7 @@ export class VoteArticleUseCase extends BaseUseCase<CreatingArticleVote, VoteArt
             if (vote.type === data.type) {
                 return { vote, counts };
             }
-            vote = await this.voteGateway.update({ id: vote.id, type: vote.type });
+            vote = await this.voteGateway.update({ id: vote.id, type: data.type });
         } else {
             vote = ArticleVoteHelpers.buildForCreate(data);
             vote = await this.voteGateway.create(vote);
