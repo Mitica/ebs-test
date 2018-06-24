@@ -37,6 +37,7 @@
   "devDependencies": {
     "@types/boom": "^7.2.0",
     "@types/node": "latest",
+    "@types/validator": "^9.4.1",
     "ava": "^0.23.0",
     "rimraf": "^2.6.2",
     "typescript": "latest"
@@ -45,6 +46,7 @@
     "@types/mongoose": "^5.0.10",
     "boom": "^7.2.0",
     "mongoose": "^5.0.15",
-    "test-domain": "file:../domain"
+    "test-domain": "file:../domain",
+    "validator": "^10.4.0"
   }
 }

@@ -10,16 +10,13 @@ import catchError from './catch';
 import * as cors from 'cors';
 import { notFound } from 'boom';
 import { initData } from './data';
+import { mountRoutes } from './routes';
 
 const isProduction = process.env.NODE_ENV === 'production';
 
 function startApp() {
 
     const app = express();
-
-    if (isProduction) {
-        app.set('trust proxy', true);
-    }
 
     app.disable('x-powered-by');
     app.disable('etag');
@@ -35,7 +32,7 @@ function startApp() {
         maxAge: isProduction ? ms('10d') : 0
     }));
 
-    // app.use
+    mountRoutes(app);
 
     app.use(function (error: any, req: any, res: Response, _next: any) {
         catchError(req, res, error);

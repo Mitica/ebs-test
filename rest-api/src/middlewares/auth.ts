@@ -1,22 +1,26 @@
 
-import * as jwt from 'express-jwt';
-import * as jwksRsa from 'jwks-rsa';
+import { Request, Response, NextFunction } from 'express';
+import { getRequestUser, jwtHandler } from '../helpers';
+import { unauthorized, boomify } from 'boom';
+import { UserRole } from 'test-domain';
 
-if (!process.env.AUTH0_DOMAIN || !process.env.AUTH0_AUDIENCE) {
-    throw 'Make sure you have AUTH0_DOMAIN, and AUTH0_AUDIENCE in your .env file';
+
+export const authenticateUser = (req: Request, res: Response, next: NextFunction) => {
+    jwtHandler(req, res, error => {
+        if (error) {
+            if (error.name === 'UnauthorizedError') {
+                error = boomify(error, { statusCode: 401 });
+            }
+            return next(error);
+        }
+        next();
+    })
 }
 
-export const checkJwt = jwt({
-    // Dynamically provide a signing key based on the kid in the header and the singing keys provided by the JWKS endpoint.
-    secret: jwksRsa.expressJwtSecret({
-        cache: true,
-        rateLimit: true,
-        jwksRequestsPerMinute: 5,
-        jwksUri: `https://${process.env.AUTH0_DOMAIN}/.well-known/jwks.json`
-    }),
-
-    // Validate the audience and the issuer.
-    audience: process.env.AUTH0_AUDIENCE,
-    issuer: `https://${process.env.AUTH0_DOMAIN}/`,
-    algorithms: ['RS256']
-});
+export const isAdmin = (req: Request, _res: Response, next: NextFunction) => {
+    const user = getRequestUser(req);
+    if (!user || user.role !== UserRole.ADMIN) {
+        return next(unauthorized())
+    }
+    next();
+}
