@@ -1,5 +1,6 @@
 require('dotenv').config();
 
+import * as https from 'https';
 import * as express from 'express';
 import * as path from 'path';
 const bodyParser = require('body-parser');
@@ -13,6 +14,7 @@ import * as passport from 'passport';
 import authRoute from './routes/auth';
 import homeRoute from './routes/home';
 import config from './config';
+import { readFileSync } from 'fs';
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -40,16 +42,16 @@ function startApp() {
     }));
 
     app.use(sessions({
-		cookieName: 'sesck',
-		requestKey: 'session', // requestKey overrides cookieName for the key name added to the request object.
-		secret: process.env.SESSION_SECRET, // should be a large unguessable string or Buffer
-		duration: 24 * 60 * 60 * 1000 // how long the session will stay valid in ms
-	}));
+        cookieName: 'sesck',
+        requestKey: 'session', // requestKey overrides cookieName for the key name added to the request object.
+        secret: process.env.SESSION_SECRET, // should be a large unguessable string or Buffer
+        duration: 24 * 60 * 60 * 1000 // how long the session will stay valid in ms
+    }));
 
-	// passport
-	app.use(passport.initialize());
+    // passport
+    app.use(passport.initialize());
     app.use(passport.session());
-    
+
     app.locals.config = config;
 
     app.use(authRoute);
@@ -65,7 +67,14 @@ function startApp() {
         catchError(req, res, error);
     });
 
-    app.listen(process.env.PORT, () => {
+    var options = {
+        key: readFileSync(path.join(__dirname, '..', 'key.pem')),
+        cert: readFileSync(path.join(__dirname, '..', 'cert.pem')),
+        requestCert: false,
+        rejectUnauthorized: false
+    };
+
+    https.createServer(options, app).listen(process.env.PORT, () => {
         console.log('Listening at %s', process.env.PORT);
     });
 }

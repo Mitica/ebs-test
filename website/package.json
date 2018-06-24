@@ -13,7 +13,8 @@
     "tscw": "tsc -w",
     "preversion": "npm run tsc",
     "postversion": "git push --follow-tags",
-    "browserify": "browserify ./assets/js/articles.js -o ./public/static/js/articles.js && browserify ./assets/js/users.js -o ./public/static/js/users.js"
+    "browserify": "browserify ./assets/js/articles.js -o ./public/static/js/articles.js && browserify ./assets/js/users.js -o ./public/static/js/users.js",
+    "cert": "openssl req -config ssl.conf -new -x509 -sha256 -newkey rsa:2048 -nodes -keyout key.pem -days 365 -out cert.pem"
   },
   "engines": {
     "node": ">=6.0.0"

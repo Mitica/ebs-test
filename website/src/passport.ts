@@ -22,7 +22,7 @@ passport.deserializeUser(function (token, done) {
 passport.use(new FacebookStrategy({
     clientID: config.facebookClientId,
     clientSecret: config.facebookClientSecret,
-    callbackURL: 'http://' + config.host + '/auth/facebook/callback',
+    callbackURL: 'https://' + config.host + '/auth/facebook/callback',
     enableProof: false,
     profileFields: ['id', 'displayName', 'name', 'email'],
 },
