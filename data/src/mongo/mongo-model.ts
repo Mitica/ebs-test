@@ -96,6 +96,11 @@ export class MongoModel<T> {
 
     protected beforeCreating(data: T) {
         const ndata: any = data;
+        for (let prop of Object.keys(ndata)) {
+            if (~[null, undefined].indexOf(ndata[prop])) {
+                delete ndata[prop];
+            }
+        }
         ndata._id = ndata._id || ndata.id;
         return data;
     }

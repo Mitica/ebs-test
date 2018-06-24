@@ -31,7 +31,7 @@ export class MongoRepository<ID extends string | number, T extends BaseEntity<ID
         const set: { [index: string]: any } = {};
         const unset: { [index: string]: string } = {};
 
-        const props = Object.keys(data).filter(prop => ['id', 'createdAt', '_id'].indexOf(prop) > -1);
+        const props = Object.keys(data).filter(prop => ['id', 'createdAt', '_id'].indexOf(prop) < 0);
 
         props.forEach(prop => {
             if (~[null, undefined].indexOf((<any>data)[prop])) {
