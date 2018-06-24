@@ -1,0 +1,30 @@
+extends ./layouts/root
+
+block content
+  #articles-app(data-base-url=config.apiBaseUrl, data-token=user.token)
+  script(type='v-template')#articles-template
+    div
+      h2 Articles
+      ul.c-articles
+        li.c-articles__item(v-for="item in articles")
+          h3 {{ item.title }}
+          p {{ item.body }}
+          ul.c-counts
+            li.c-counts-up(v-on:click="vote(item, 'UP')") {{item.countUpVotes}}
+            li.c-counts-down(v-on:click="vote(item, 'DOWN')") {{item.countDownVotes}}
+      br
+      br
+      h3 Create a new article
+      form.c-create-article(v-on:submit="create($event)",v-on:submit.prevent)
+        .form-group
+          label(for='create-title') Title
+          input#create-title.form-control(type='text', name='title', required, placeholder='Enter title',v-model="newArticle.title")
+        .form-group
+          label(for='create-body') Content
+          textarea#create-body.form-control(type='text', name='body', required, placeholder='Enter content',v-model="newArticle.body")
+        button.btn.btn-primary(type='submit') Submit
+
+block scripts
+  script(type='text/javascript', async, src="/static/js/articles.js")
+
+        

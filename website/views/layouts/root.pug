@@ -1,0 +1,32 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
+    title= page.title
+    if (page.description)
+      meta(name='description', content=site.head.description)
+    link(rel='icon', type='image/png', href='/static/img/favicon.png', sizes='42x42')
+    block head
+    link(rel="stylesheet", media="all", href="/static/css/main.css")
+
+  body
+    #fb-root
+    #page-header
+      ul#menu
+        li
+          a(href='/') Home
+        li
+          a(href='/admin') Admin
+    #page-main
+      .container
+        .c-content
+          block content
+    #page-footer
+      .container
+        
+
+    //- script(src="https://code.jquery.com/jquery-3.2.1.slim.min.js", crossorigin="anonymous")
+    //- script(type='text/javascript', async, src="/static/js/main.js")
+    block scripts

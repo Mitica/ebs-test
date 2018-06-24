@@ -1,0 +1,8 @@
+extends ./layouts/root
+
+block content
+  .c-content.u-center
+    .c-content__header
+      h2 Error  
+        span= data.statusCode
+      h3= error.message
