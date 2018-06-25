@@ -1,0 +1,190 @@
+swagger: "2.0"
+info:
+  description: "This is documentation for a simple articles API"
+  version: "1.0.0"
+  title: "EBS Test REST API"
+  contact:
+    email: "canteadumitru@gmail.com"
+host: "localhost:41725"
+basePath: ""
+tags:
+- name: "articles"
+  description: "Simple articles"
+  externalDocs:
+    description: "Find out more"
+    url: "https://github.com/mitica/ebs-test"
+- name: "auth"
+  description: "Authentication"
+schemes:
+- "http"
+paths:
+  /auth/login:
+    post:
+      tags:
+      - "auth"
+      summary: "Login an user with email & password or with a facebookId"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Login data"
+        required: true
+        schema:
+          $ref: "#/definitions/LoginData"
+      responses:
+        405:
+          description: "Invalid input"
+  /auth/register:
+    post:
+      tags:
+      - "auth"
+      summary: "Register an user in the store"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Register data"
+        required: true
+        schema:
+          $ref: "#/definitions/RegisterData"
+      responses:
+        405:
+          description: "Invalid input"
+  /articles:
+    get:
+      tags:
+      - "articles"
+      summary: "Get articles from the store"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        405:
+          description: "Invalid input"
+    post:
+      tags:
+      - "articles"
+      summary: "Add a new article to the store"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Article object that needs to be added to the store"
+        required: true
+        schema:
+          $ref: "#/definitions/Article"
+      responses:
+        405:
+          description: "Invalid input"
+
+  /articles/{id}/vote:
+    post:
+      tags:
+      - "articles"
+      summary: "Vote for an article"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "id"
+        required: true
+        description: "Article id"
+        schema:
+          type: "string"
+      - in: "body"
+        name: "body"
+        description: "Vote info"
+        required: true
+        schema:
+          $ref: "#/definitions/ArticleVote"
+      responses:
+        400:
+          description: "Invalid data"
+        404:
+          description: "Article not found"
+  /users:
+    get:
+      tags:
+      - "users"
+      summary: "Get users from the store"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        401:
+          description: "Not admin"
+  /users/me:
+    get:
+      tags:
+      - "users"
+      summary: "Get current logged user"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        401:
+          description: "Not logged"
+  
+definitions:
+  ArticleVote:
+    type: "object"
+    properties:
+      articleId:
+        type: "string"
+      type:
+        type: "string"
+        description: "Vote Type"
+        enum:
+        - "UP"
+        - "DOWN"
+    xml:
+      name: "ArticleVote"
+  Article:
+    type: "object"
+    properties:
+      title:
+        type: "string"
+      body:
+        type: "string"
+    xml:
+      name: "Article"
+  LoginData:
+    type: "object"
+    properties:
+      email:
+        type: "string"
+      password:
+        type: "string"
+      facebookId:
+        type: "string"
+    xml:
+      name: "LoginData"
+  RegisterData:
+    type: "object"
+    properties:
+      email:
+        type: "string"
+      password:
+        type: "string"
+      facebookId:
+        type: "string"
+    xml:
+      name: "RegisterData"
+
+externalDocs:
+  description: "Find out more about tihs test"
+  url: "https://github.com/mitica/ebs-test"
