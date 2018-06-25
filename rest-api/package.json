@@ -17,7 +17,8 @@
     "postversion": "git push --follow-tags",
     "prepublishOnly": "npm run tsc && npm run clean-test-code",
     "clean": "rimraf ./dest && rimraf ./types",
-    "clean-test-code": "rimraf ./dest/**/*.test.js && rimraf ./types/**/*.test.d.ts"
+    "clean-test-code": "rimraf ./dest/**/*.test.js && rimraf ./types/**/*.test.d.ts",
+    "docs": "spectacle ./swagger.yaml -t ./public/docs"
   },
   "engines": {
     "node": ">=8.0.0"
@@ -50,6 +51,7 @@
     "@types/node": "latest",
     "ava": "^0.23.0",
     "rimraf": "^2.6.2",
+    "spectacle-docs": "^1.0.3",
     "typescript": "latest"
   },
   "dependencies": {
