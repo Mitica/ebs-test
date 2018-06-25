@@ -33,6 +33,6 @@ export async function createUserController(req: Request, res: Response) {
         user.token = jwtSign(user);
         sendResponse(res, 201, user);
     } catch (e) {
-        catchError(req, res, e, 400);
+        catchError(req, res, e, 422);
     }
 }

@@ -5,7 +5,7 @@ import catchError from '../catch';
 import { sendResponse, jwtSign } from '../helpers';
 import { InputUser } from '../entities/input-user';
 import { UserHelpers, User } from 'test-domain';
-import { notFound } from 'boom';
+import { notFound, badData } from 'boom';
 
 
 export async function registerUserController(req: Request, res: Response) {
@@ -17,12 +17,19 @@ export async function registerUserController(req: Request, res: Response) {
         user.token = jwtSign(user);
         sendResponse(res, 201, user);
     } catch (e) {
-        catchError(req, res, e, 400);
+        catchError(req, res, e, 422);
     }
 }
 
 export async function loginUserController(req: Request, res: Response, next: NextFunction) {
     let inputData = InputUser.fromRequest(req);
+
+    if (!inputData.email) {
+        return next(badData());
+    }
+    if (!inputData.facebookId && !inputData.password) {
+        return next(badData());
+    }
 
     try {
         let user: User | null;
@@ -46,6 +53,6 @@ export async function loginUserController(req: Request, res: Response, next: Nex
         user.token = jwtSign(user);
         sendResponse(res, 200, user);
     } catch (e) {
-        catchError(req, res, e, 400);
+        catchError(req, res, e, 422);
     }
 }

@@ -15,6 +15,8 @@ tags:
     url: "https://github.com/mitica/ebs-test"
 - name: "auth"
   description: "Authentication"
+- name: "users"
+  description: "API users"
 schemes:
 - "http"
 paths:
@@ -33,10 +35,14 @@ paths:
         description: "Login data"
         required: true
         schema:
-          $ref: "#/definitions/LoginData"
+          $ref: "#/definitions/LoginInput"
       responses:
-        405:
-          description: "Invalid input"
+        404:
+          description: "User not found"
+        200:
+          description: User found
+        422:
+          description: Invalid data
   /auth/register:
     post:
       tags:
@@ -52,22 +58,28 @@ paths:
         description: "Register data"
         required: true
         schema:
-          $ref: "#/definitions/RegisterData"
+          $ref: "#/definitions/RegisterInput"
       responses:
-        405:
-          description: "Invalid input"
+        201:
+          description: User created
+        422:
+          description: Invalid input data
   /articles:
     get:
       tags:
       - "articles"
-      summary: "Get articles from the store"
+      summary: "Get a list of articles from the store"
       consumes:
       - "application/json"
       produces:
       - "application/json"
       responses:
-        405:
-          description: "Invalid input"
+        200:
+          description: Got article list
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Article"
     post:
       tags:
       - "articles"
@@ -82,10 +94,14 @@ paths:
         description: "Article object that needs to be added to the store"
         required: true
         schema:
-          $ref: "#/definitions/Article"
+          $ref: "#/definitions/ArticleInput"
       responses:
-        405:
-          description: "Invalid input"
+        201:
+          description: Article created
+          schema:
+            $ref: "#/definitions/Article"
+        422:
+          description: Invalid input data
 
   /articles/{id}/vote:
     post:
@@ -108,12 +124,14 @@ paths:
         description: "Vote info"
         required: true
         schema:
-          $ref: "#/definitions/ArticleVote"
+          $ref: "#/definitions/ArticleVoteInput"
       responses:
-        400:
+        422:
           description: "Invalid data"
-        404:
-          description: "Article not found"
+        200:
+          description: "Voted with success"
+          schema:
+            $ref: "#/definitions/ArticleVoteResult"
   /users:
     get:
       tags:
@@ -124,8 +142,34 @@ paths:
       produces:
       - "application/json"
       responses:
-        401:
-          description: "Not admin"
+        200:
+          description: "Got users"
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/User"
+    post:
+      tags:
+      - "users"
+      summary: "Creates a new user"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "User object to create"
+        required: true
+        schema:
+          $ref: "#/definitions/UserInput"
+      responses:
+        201:
+          description: User created
+          schema:
+            $ref: "#/definitions/User"
+        422:
+          description: Invalid input data
   /users/me:
     get:
       tags:
@@ -136,11 +180,13 @@ paths:
       produces:
       - "application/json"
       responses:
-        401:
-          description: "Not logged"
+        200:
+          description: "Got data"
+          schema:
+            $ref: "#/definitions/User"
   
 definitions:
-  ArticleVote:
+  ArticleVoteInput:
     type: "object"
     properties:
       articleId:
@@ -151,18 +197,68 @@ definitions:
         enum:
         - "UP"
         - "DOWN"
+    required:
+    - articleId
+    - type
     xml:
-      name: "ArticleVote"
+      name: "ArticleVoteInput"
+  ArticleVoteResult:
+    type: "object"
+    properties:
+      counts:
+        type: "object"
+        properties:
+          countUpVotes:
+            type: "integer"
+            description: "Count up votes"
+          countDownVotes:
+            type: "integer"
+            description: "Count down votes"
+      vote:
+        type: "object"
+        properties:
+          id:
+            type: string
+          articleId:
+            type: string
+          userId:
+            type: string
+    required:
+    - counts
+    - vote
+    xml:
+      name: "ArticleVoteResult"
   Article:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+      title:
+        type: "string"
+      body:
+        type: "string"
+      createdAt:
+        type: "string"
+      updatedAt:
+        type: "string"
+      countUpVotes:
+        type: "integer"
+      countDownVotes:
+        type: "integer"
+    xml:
+      name: "Article"
+  ArticleInput:
     type: "object"
     properties:
       title:
         type: "string"
       body:
         type: "string"
+    required:
+    - title
     xml:
-      name: "Article"
-  LoginData:
+      name: "ArticleInput"
+  LoginInput:
     type: "object"
     properties:
       email:
@@ -171,9 +267,11 @@ definitions:
         type: "string"
       facebookId:
         type: "string"
+    required:
+    - email
     xml:
-      name: "LoginData"
-  RegisterData:
+      name: "LoginInput"
+  RegisterInput:
     type: "object"
     properties:
       email:
@@ -182,8 +280,52 @@ definitions:
         type: "string"
       facebookId:
         type: "string"
+    required:
+    - email
     xml:
-      name: "RegisterData"
+      name: "RegisterInput"
+  UserInput:
+    type: "object"
+    properties:
+      email:
+        type: "string"
+      password:
+        type: "string"
+      facebookId:
+        type: "string"
+      firstName:
+        type: "string"
+      lastName:
+        type: "string"
+    required:
+    - email
+    xml:
+      name: "UserInput"
+  User:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+      email:
+        type: "string"
+      facebookId:
+        type: "string"
+      createdAt:
+        type: "string"
+      updatedAt:
+        type: "string"
+      firstName:
+        type: "string"
+      lastName:
+        type: "string"
+      role:
+        type: "string"
+        description: "User role"
+        enum:
+        - "user"
+        - "admin"
+    xml:
+      name: "User"
 
 externalDocs:
   description: "Find out more about tihs test"

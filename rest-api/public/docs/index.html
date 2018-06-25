@@ -24,7 +24,7 @@
             <a href="#tag-articles">articles</a>
             <ul>
               <li>
-                <a href="#operation--articles-get"> Get articles from the store </a>
+                <a href="#operation--articles-get"> Get a list of articles from the store </a>
               </li>
               <li>
                 <a href="#operation--articles-post"> Add a new article to the store </a>
@@ -52,15 +52,22 @@
                 <a href="#operation--users-get"> Get users from the store </a>
               </li>
               <li>
+                <a href="#operation--users-post"> Creates a new user </a>
+              </li>
+              <li>
                 <a href="#operation--users-me-get"> Get current logged user </a>
               </li>
             </ul>
           </section>
           <h5>Schema Definitions</h5>
-          <a href="#definition-ArticleVote"> ArticleVote </a>
+          <a href="#definition-ArticleVoteInput"> ArticleVoteInput </a>
+          <a href="#definition-ArticleVoteResult"> ArticleVoteResult </a>
           <a href="#definition-Article"> Article </a>
-          <a href="#definition-LoginData"> LoginData </a>
-          <a href="#definition-RegisterData"> RegisterData </a>
+          <a href="#definition-ArticleInput"> ArticleInput </a>
+          <a href="#definition-LoginInput"> LoginInput </a>
+          <a href="#definition-RegisterInput"> RegisterInput </a>
+          <a href="#definition-UserInput"> UserInput </a>
+          <a href="#definition-User"> User </a>
         </nav>
       </div>
       <div id="docs" class="row collapse expanded drawer" data-drawer>
@@ -111,7 +118,7 @@
             <!-- </div> -->
             <!-- </section> -->
             <h2 class="operation-title">
-              <span class="operation-summary">Get articles from the store</span>
+              <span class="operation-summary">Get a list of articles from the store</span>
             </h2>
             <div class="doc-row">
               <div class="doc-copy">
@@ -130,10 +137,27 @@
                 <section class="swagger-responses">
                   <div class="prop-row prop-group">
                     <div class="prop-name">
-                      <div class="prop-title">405 Method Not Allowed</div>
+                      <div class="prop-title">200 OK</div>
+                      <div class="prop-ref">
+                        <span class="json-schema-ref-array">
+                          <a class="json-schema-ref" href="#/definitions/Article">Article</a>
+                        </span>
+                      </div>
+                      <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
                     </div>
                     <div class="prop-value">
-                      <p>Invalid input</p>
+                      <p>Got article list</p>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-inner">
+                    <div class="prop-name">type</div>
+                    <div class="prop-value">
+                      <span class="json-property-type">
+                        <span class="json-schema-ref-array">
+                          <a class="json-schema-ref" href="#/definitions/Article">Article</a>
+                        </span>
+                      </span>
+                      <span class="json-property-range" title="Value limits"></span>
                     </div>
                   </div>
                 </section>
@@ -142,6 +166,24 @@
                 <h5>Response Content-Types:
                   <span>application/json</span>
                 </h5>
+                <section>
+                  <h5>Response Example
+                    <span>(200 OK)</span>
+                  </h5>
+                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json">[
+  {
+    <span class="hljs-attr">&quot;id&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+    <span class="hljs-attr">&quot;title&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+    <span class="hljs-attr">&quot;body&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+    <span class="hljs-attr">&quot;createdAt&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+    <span class="hljs-attr">&quot;updatedAt&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+    <span class="hljs-attr">&quot;countUpVotes&quot;</span>: <span class="hljs-string">&quot;integer&quot;</span>,
+    <span class="hljs-attr">&quot;countDownVotes&quot;</span>: <span class="hljs-string">&quot;integer&quot;</span>
+  }
+]
+</code></pre>
+                  <!-- </div> -->
+                </section>
               </div>
             </div>
           </div>
@@ -172,7 +214,7 @@
                     <div class="prop-name">
                       <div class="swagger-request-model">
                         <span class="">
-                          <a class="json-schema-ref" href="#/definitions/Article">Article</a>
+                          <a class="json-schema-ref" href="#/definitions/ArticleInput">ArticleInput</a>
                         </span>
                       </div>
                     </div>
@@ -204,10 +246,24 @@
                 <section class="swagger-responses">
                   <div class="prop-row prop-group">
                     <div class="prop-name">
-                      <div class="prop-title">405 Method Not Allowed</div>
+                      <div class="prop-title">201 Created</div>
+                      <div class="prop-ref">
+                        <span class="">
+                          <a class="json-schema-ref" href="#/definitions/Article">Article</a>
+                        </span>
+                      </div>
+                      <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
                     </div>
                     <div class="prop-value">
-                      <p>Invalid input</p>
+                      <p>Article created</p>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">422 Unprocessable Entity</div>
+                    </div>
+                    <div class="prop-value">
+                      <p>Invalid input data</p>
                     </div>
                   </div>
                 </section>
@@ -216,6 +272,22 @@
                 <h5>Response Content-Types:
                   <span>application/json</span>
                 </h5>
+                <section>
+                  <h5>Response Example
+                    <span>(201 Created)</span>
+                  </h5>
+                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
+  <span class="hljs-attr">&quot;id&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;title&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;body&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;createdAt&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;updatedAt&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;countUpVotes&quot;</span>: <span class="hljs-string">&quot;integer&quot;</span>,
+  <span class="hljs-attr">&quot;countDownVotes&quot;</span>: <span class="hljs-string">&quot;integer&quot;</span>
+}
+</code></pre>
+                  <!-- </div> -->
+                </section>
               </div>
             </div>
           </div>
@@ -246,7 +318,7 @@
                     <div class="prop-name">
                       <div class="swagger-request-model">
                         <span class="">
-                          <a class="json-schema-ref" href="#/definitions/ArticleVote">ArticleVote</a>
+                          <a class="json-schema-ref" href="#/definitions/ArticleVoteInput">ArticleVoteInput</a>
                         </span>
                       </div>
                     </div>
@@ -294,18 +366,24 @@
                 <section class="swagger-responses">
                   <div class="prop-row prop-group">
                     <div class="prop-name">
-                      <div class="prop-title">400 Bad Request</div>
+                      <div class="prop-title">200 OK</div>
+                      <div class="prop-ref">
+                        <span class="">
+                          <a class="json-schema-ref" href="#/definitions/ArticleVoteResult">ArticleVoteResult</a>
+                        </span>
+                      </div>
+                      <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
                     </div>
                     <div class="prop-value">
-                      <p>Invalid data</p>
+                      <p>Voted with success</p>
                     </div>
                   </div>
                   <div class="prop-row prop-group">
                     <div class="prop-name">
-                      <div class="prop-title">404 Not Found</div>
+                      <div class="prop-title">422 Unprocessable Entity</div>
                     </div>
                     <div class="prop-value">
-                      <p>Article not found</p>
+                      <p>Invalid data</p>
                     </div>
                   </div>
                 </section>
@@ -314,6 +392,24 @@
                 <h5>Response Content-Types:
                   <span>application/json</span>
                 </h5>
+                <section>
+                  <h5>Response Example
+                    <span>(200 OK)</span>
+                  </h5>
+                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
+  <span class="hljs-attr">&quot;counts&quot;</span>: {
+    <span class="hljs-attr">&quot;countUpVotes&quot;</span>: <span class="hljs-string">&quot;integer&quot;</span>,
+    <span class="hljs-attr">&quot;countDownVotes&quot;</span>: <span class="hljs-string">&quot;integer&quot;</span>
+  },
+  <span class="hljs-attr">&quot;vote&quot;</span>: {
+    <span class="hljs-attr">&quot;id&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+    <span class="hljs-attr">&quot;articleId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+    <span class="hljs-attr">&quot;userId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>
+  }
+}
+</code></pre>
+                  <!-- </div> -->
+                </section>
               </div>
             </div>
           </div>
@@ -350,7 +446,7 @@
                     <div class="prop-name">
                       <div class="swagger-request-model">
                         <span class="">
-                          <a class="json-schema-ref" href="#/definitions/LoginData">LoginData</a>
+                          <a class="json-schema-ref" href="#/definitions/LoginInput">LoginInput</a>
                         </span>
                       </div>
                     </div>
@@ -383,10 +479,26 @@
                 <section class="swagger-responses">
                   <div class="prop-row prop-group">
                     <div class="prop-name">
-                      <div class="prop-title">405 Method Not Allowed</div>
+                      <div class="prop-title">200 OK</div>
                     </div>
                     <div class="prop-value">
-                      <p>Invalid input</p>
+                      <p>User found</p>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">404 Not Found</div>
+                    </div>
+                    <div class="prop-value">
+                      <p>User not found</p>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">422 Unprocessable Entity</div>
+                    </div>
+                    <div class="prop-value">
+                      <p>Invalid data</p>
                     </div>
                   </div>
                 </section>
@@ -425,7 +537,7 @@
                     <div class="prop-name">
                       <div class="swagger-request-model">
                         <span class="">
-                          <a class="json-schema-ref" href="#/definitions/RegisterData">RegisterData</a>
+                          <a class="json-schema-ref" href="#/definitions/RegisterInput">RegisterInput</a>
                         </span>
                       </div>
                     </div>
@@ -458,10 +570,18 @@
                 <section class="swagger-responses">
                   <div class="prop-row prop-group">
                     <div class="prop-name">
-                      <div class="prop-title">405 Method Not Allowed</div>
+                      <div class="prop-title">201 Created</div>
                     </div>
                     <div class="prop-value">
-                      <p>Invalid input</p>
+                      <p>User created</p>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">422 Unprocessable Entity</div>
+                    </div>
+                    <div class="prop-value">
+                      <p>Invalid input data</p>
                     </div>
                   </div>
                 </section>
@@ -474,6 +594,11 @@
             </div>
           </div>
           <h1 id="tag-users" class="swagger-summary-tag" data-traverse-target="tag-users">users</h1>
+          <div class="tag-description doc-row">
+            <div class="doc-copy">
+              <p>API users</p>
+            </div>
+          </div>
           <div id="operation--users-get" class="operation panel" data-traverse-target="operation--users-get">
             <!-- <section class="operation-tags row"> -->
             <!-- <div class="doc-copy"> -->
@@ -503,10 +628,27 @@
                 <section class="swagger-responses">
                   <div class="prop-row prop-group">
                     <div class="prop-name">
-                      <div class="prop-title">401 Unauthorized</div>
+                      <div class="prop-title">200 OK</div>
+                      <div class="prop-ref">
+                        <span class="json-schema-ref-array">
+                          <a class="json-schema-ref" href="#/definitions/User">User</a>
+                        </span>
+                      </div>
+                      <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
                     </div>
                     <div class="prop-value">
-                      <p>Not admin</p>
+                      <p>Got users</p>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-inner">
+                    <div class="prop-name">type</div>
+                    <div class="prop-value">
+                      <span class="json-property-type">
+                        <span class="json-schema-ref-array">
+                          <a class="json-schema-ref" href="#/definitions/User">User</a>
+                        </span>
+                      </span>
+                      <span class="json-property-range" title="Value limits"></span>
                     </div>
                   </div>
                 </section>
@@ -515,6 +657,133 @@
                 <h5>Response Content-Types:
                   <span>application/json</span>
                 </h5>
+                <section>
+                  <h5>Response Example
+                    <span>(200 OK)</span>
+                  </h5>
+                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json">[
+  {
+    <span class="hljs-attr">&quot;id&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+    <span class="hljs-attr">&quot;email&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+    <span class="hljs-attr">&quot;facebookId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+    <span class="hljs-attr">&quot;createdAt&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+    <span class="hljs-attr">&quot;updatedAt&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+    <span class="hljs-attr">&quot;firstName&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+    <span class="hljs-attr">&quot;lastName&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+    <span class="hljs-attr">&quot;role&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>
+  }
+]
+</code></pre>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+          </div>
+          <div id="operation--users-post" class="operation panel" data-traverse-target="operation--users-post">
+            <!-- <section class="operation-tags row"> -->
+            <!-- <div class="doc-copy"> -->
+            <div class="operation-tags">
+              <a class="label" href="#tag-users">users</a>
+              <!---->
+            </div>
+            <!-- </div> -->
+            <!-- </section> -->
+            <h2 class="operation-title">
+              <span class="operation-summary">Creates a new user</span>
+            </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-operation-path">
+                  <span class="operation-method">POST</span>
+                  <span class="operation-path">/users</span>
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-request-body">
+                  <div class="prop-row">
+                    <div class="prop-name">
+                      <div class="swagger-request-model">
+                        <span class="">
+                          <a class="json-schema-ref" href="#/definitions/UserInput">UserInput</a>
+                        </span>
+                      </div>
+                    </div>
+                    <div class="prop-value columns small-6">
+                      <!-- <div class="swagger-request-description"> -->
+                      <p>User object to create</p>
+                      <!-- </div> -->
+                    </div>
+                  </div>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>Request Content-Types:
+                    <span>application/json</span>
+                  </h5>
+                  <h5>Request Example</h5>
+                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
+  <span class="hljs-attr">&quot;email&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;password&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;facebookId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;firstName&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;lastName&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>
+}
+</code></pre>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-responses">
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">201 Created</div>
+                      <div class="prop-ref">
+                        <span class="">
+                          <a class="json-schema-ref" href="#/definitions/User">User</a>
+                        </span>
+                      </div>
+                      <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
+                    </div>
+                    <div class="prop-value">
+                      <p>User created</p>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">422 Unprocessable Entity</div>
+                    </div>
+                    <div class="prop-value">
+                      <p>Invalid input data</p>
+                    </div>
+                  </div>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <h5>Response Content-Types:
+                  <span>application/json</span>
+                </h5>
+                <section>
+                  <h5>Response Example
+                    <span>(201 Created)</span>
+                  </h5>
+                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
+  <span class="hljs-attr">&quot;id&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;email&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;facebookId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;createdAt&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;updatedAt&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;firstName&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;lastName&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;role&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>
+}
+</code></pre>
+                  <!-- </div> -->
+                </section>
               </div>
             </div>
           </div>
@@ -547,10 +816,16 @@
                 <section class="swagger-responses">
                   <div class="prop-row prop-group">
                     <div class="prop-name">
-                      <div class="prop-title">401 Unauthorized</div>
+                      <div class="prop-title">200 OK</div>
+                      <div class="prop-ref">
+                        <span class="">
+                          <a class="json-schema-ref" href="#/definitions/User">User</a>
+                        </span>
+                      </div>
+                      <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
                     </div>
                     <div class="prop-value">
-                      <p>Not logged</p>
+                      <p>Got data</p>
                     </div>
                   </div>
                 </section>
@@ -559,13 +834,30 @@
                 <h5>Response Content-Types:
                   <span>application/json</span>
                 </h5>
+                <section>
+                  <h5>Response Example
+                    <span>(200 OK)</span>
+                  </h5>
+                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
+  <span class="hljs-attr">&quot;id&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;email&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;facebookId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;createdAt&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;updatedAt&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;firstName&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;lastName&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;role&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>
+}
+</code></pre>
+                  <!-- </div> -->
+                </section>
               </div>
             </div>
           </div>
           <h1>Schema Definitions</h1>
-          <div id="definition-ArticleVote" class="definition panel" data-traverse-target="definition-ArticleVote">
+          <div id="definition-ArticleVoteInput" class="definition panel" data-traverse-target="definition-ArticleVoteInput">
             <h2 class="panel-title">
-              <a name="/definitions/ArticleVote"></a>ArticleVote: object
+              <a name="/definitions/ArticleVoteInput"></a>ArticleVoteInput: object
               <!-- <span class="json-property-type"><span class="json-property-type">object</span>
               <span class="json-property-range" title="Value limits"></span>
               
@@ -580,6 +872,7 @@
                       <span class="json-property-name">articleId:</span>
                       <span class="json-property-type">string</span>
                       <span class="json-property-range" title="Value limits"></span>
+                      <span class="json-property-required"></span>
                     </dt>
                     <dt data-property-name="type" class="has-description">
                       <span class="json-property-name">type:</span>
@@ -589,6 +882,7 @@
                         <span class="json-property-enum-item">DOWN</span>
                       </span>
                       <span class="json-property-range" title="Value limits"></span>
+                      <span class="json-property-required"></span>
                     </dt>
                     <dd>
                       <p>Vote Type</p>
@@ -609,9 +903,169 @@
               </div>
             </div>
           </div>
+          <div id="definition-ArticleVoteResult" class="definition panel" data-traverse-target="definition-ArticleVoteResult">
+            <h2 class="panel-title">
+              <a name="/definitions/ArticleVoteResult"></a>ArticleVoteResult: object
+              <!-- <span class="json-property-type"><span class="json-property-type">object</span>
+              <span class="json-property-range" title="Value limits"></span>
+              
+              
+              </span> -->
+            </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="json-schema-properties">
+                  <dl>
+                    <dt data-property-name="counts">
+                      <span class="json-property-name">counts:</span>
+                      <span class="json-property-type">object</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                      <span class="json-property-required"></span>
+                    </dt>
+                    <dt class="json-inner-schema">
+                      <section class="json-schema-properties">
+                        <dl>
+                          <dt data-property-name="countUpVotes" class="has-description">
+                            <span class="json-property-name">countUpVotes:</span>
+                            <span class="json-property-type">integer</span>
+                            <span class="json-property-range" title="Value limits"></span>
+                          </dt>
+                          <dd>
+                            <p>Count up votes</p>
+                          </dd>
+                          <dt data-property-name="countDownVotes" class="has-description">
+                            <span class="json-property-name">countDownVotes:</span>
+                            <span class="json-property-type">integer</span>
+                            <span class="json-property-range" title="Value limits"></span>
+                          </dt>
+                          <dd>
+                            <p>Count down votes</p>
+                          </dd>
+                        </dl>
+                      </section>
+                    </dt>
+                    <dt data-property-name="vote">
+                      <span class="json-property-name">vote:</span>
+                      <span class="json-property-type">object</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                      <span class="json-property-required"></span>
+                    </dt>
+                    <dt class="json-inner-schema">
+                      <section class="json-schema-properties">
+                        <dl>
+                          <dt data-property-name="id">
+                            <span class="json-property-name">id:</span>
+                            <span class="json-property-type">string</span>
+                            <span class="json-property-range" title="Value limits"></span>
+                          </dt>
+                          <dt data-property-name="articleId">
+                            <span class="json-property-name">articleId:</span>
+                            <span class="json-property-type">string</span>
+                            <span class="json-property-range" title="Value limits"></span>
+                          </dt>
+                          <dt data-property-name="userId">
+                            <span class="json-property-name">userId:</span>
+                            <span class="json-property-type">string</span>
+                            <span class="json-property-range" title="Value limits"></span>
+                          </dt>
+                        </dl>
+                      </section>
+                    </dt>
+                  </dl>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>Example</h5>
+                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
+  <span class="hljs-attr">&quot;counts&quot;</span>: {
+    <span class="hljs-attr">&quot;countUpVotes&quot;</span>: <span class="hljs-string">&quot;integer&quot;</span>,
+    <span class="hljs-attr">&quot;countDownVotes&quot;</span>: <span class="hljs-string">&quot;integer&quot;</span>
+  },
+  <span class="hljs-attr">&quot;vote&quot;</span>: {
+    <span class="hljs-attr">&quot;id&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+    <span class="hljs-attr">&quot;articleId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+    <span class="hljs-attr">&quot;userId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>
+  }
+}
+</code></pre>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+          </div>
           <div id="definition-Article" class="definition panel" data-traverse-target="definition-Article">
             <h2 class="panel-title">
               <a name="/definitions/Article"></a>Article: object
+              <!-- <span class="json-property-type"><span class="json-property-type">object</span>
+              <span class="json-property-range" title="Value limits"></span>
+              
+              
+              </span> -->
+            </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="json-schema-properties">
+                  <dl>
+                    <dt data-property-name="id">
+                      <span class="json-property-name">id:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dt data-property-name="title">
+                      <span class="json-property-name">title:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dt data-property-name="body">
+                      <span class="json-property-name">body:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dt data-property-name="createdAt">
+                      <span class="json-property-name">createdAt:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dt data-property-name="updatedAt">
+                      <span class="json-property-name">updatedAt:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dt data-property-name="countUpVotes">
+                      <span class="json-property-name">countUpVotes:</span>
+                      <span class="json-property-type">integer</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dt data-property-name="countDownVotes">
+                      <span class="json-property-name">countDownVotes:</span>
+                      <span class="json-property-type">integer</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                  </dl>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>Example</h5>
+                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
+  <span class="hljs-attr">&quot;id&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;title&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;body&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;createdAt&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;updatedAt&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;countUpVotes&quot;</span>: <span class="hljs-string">&quot;integer&quot;</span>,
+  <span class="hljs-attr">&quot;countDownVotes&quot;</span>: <span class="hljs-string">&quot;integer&quot;</span>
+}
+</code></pre>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+          </div>
+          <div id="definition-ArticleInput" class="definition panel" data-traverse-target="definition-ArticleInput">
+            <h2 class="panel-title">
+              <a name="/definitions/ArticleInput"></a>ArticleInput: object
               <!-- <span class="json-property-type"><span class="json-property-type">object</span>
               <span class="json-property-range" title="Value limits"></span>
               
@@ -626,6 +1080,7 @@
                       <span class="json-property-name">title:</span>
                       <span class="json-property-type">string</span>
                       <span class="json-property-range" title="Value limits"></span>
+                      <span class="json-property-required"></span>
                     </dt>
                     <dt data-property-name="body">
                       <span class="json-property-name">body:</span>
@@ -648,9 +1103,9 @@
               </div>
             </div>
           </div>
-          <div id="definition-LoginData" class="definition panel" data-traverse-target="definition-LoginData">
+          <div id="definition-LoginInput" class="definition panel" data-traverse-target="definition-LoginInput">
             <h2 class="panel-title">
-              <a name="/definitions/LoginData"></a>LoginData: object
+              <a name="/definitions/LoginInput"></a>LoginInput: object
               <!-- <span class="json-property-type"><span class="json-property-type">object</span>
               <span class="json-property-range" title="Value limits"></span>
               
@@ -665,6 +1120,7 @@
                       <span class="json-property-name">email:</span>
                       <span class="json-property-type">string</span>
                       <span class="json-property-range" title="Value limits"></span>
+                      <span class="json-property-required"></span>
                     </dt>
                     <dt data-property-name="password">
                       <span class="json-property-name">password:</span>
@@ -693,9 +1149,9 @@
               </div>
             </div>
           </div>
-          <div id="definition-RegisterData" class="definition panel" data-traverse-target="definition-RegisterData">
+          <div id="definition-RegisterInput" class="definition panel" data-traverse-target="definition-RegisterInput">
             <h2 class="panel-title">
-              <a name="/definitions/RegisterData"></a>RegisterData: object
+              <a name="/definitions/RegisterInput"></a>RegisterInput: object
               <!-- <span class="json-property-type"><span class="json-property-type">object</span>
               <span class="json-property-range" title="Value limits"></span>
               
@@ -710,6 +1166,7 @@
                       <span class="json-property-name">email:</span>
                       <span class="json-property-type">string</span>
                       <span class="json-property-range" title="Value limits"></span>
+                      <span class="json-property-required"></span>
                     </dt>
                     <dt data-property-name="password">
                       <span class="json-property-name">password:</span>
@@ -731,6 +1188,146 @@
   <span class="hljs-attr">&quot;email&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
   <span class="hljs-attr">&quot;password&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
   <span class="hljs-attr">&quot;facebookId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>
+}
+</code></pre>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+          </div>
+          <div id="definition-UserInput" class="definition panel" data-traverse-target="definition-UserInput">
+            <h2 class="panel-title">
+              <a name="/definitions/UserInput"></a>UserInput: object
+              <!-- <span class="json-property-type"><span class="json-property-type">object</span>
+              <span class="json-property-range" title="Value limits"></span>
+              
+              
+              </span> -->
+            </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="json-schema-properties">
+                  <dl>
+                    <dt data-property-name="email">
+                      <span class="json-property-name">email:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                      <span class="json-property-required"></span>
+                    </dt>
+                    <dt data-property-name="password">
+                      <span class="json-property-name">password:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dt data-property-name="facebookId">
+                      <span class="json-property-name">facebookId:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dt data-property-name="firstName">
+                      <span class="json-property-name">firstName:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dt data-property-name="lastName">
+                      <span class="json-property-name">lastName:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                  </dl>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>Example</h5>
+                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
+  <span class="hljs-attr">&quot;email&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;password&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;facebookId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;firstName&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;lastName&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>
+}
+</code></pre>
+                  <!-- </div> -->
+                </section>
+              </div>
+            </div>
+          </div>
+          <div id="definition-User" class="definition panel" data-traverse-target="definition-User">
+            <h2 class="panel-title">
+              <a name="/definitions/User"></a>User: object
+              <!-- <span class="json-property-type"><span class="json-property-type">object</span>
+              <span class="json-property-range" title="Value limits"></span>
+              
+              
+              </span> -->
+            </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="json-schema-properties">
+                  <dl>
+                    <dt data-property-name="id">
+                      <span class="json-property-name">id:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dt data-property-name="email">
+                      <span class="json-property-name">email:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dt data-property-name="facebookId">
+                      <span class="json-property-name">facebookId:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dt data-property-name="createdAt">
+                      <span class="json-property-name">createdAt:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dt data-property-name="updatedAt">
+                      <span class="json-property-name">updatedAt:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dt data-property-name="firstName">
+                      <span class="json-property-name">firstName:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dt data-property-name="lastName">
+                      <span class="json-property-name">lastName:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dt data-property-name="role" class="has-description">
+                      <span class="json-property-name">role:</span>
+                      <span class="json-property-type">string</span>
+                      <span class="json-property-enum" title="Possible values">
+                        <span class="json-property-enum-item">user</span>,
+                        <span class="json-property-enum-item">admin</span>
+                      </span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </dt>
+                    <dd>
+                      <p>User role</p>
+                    </dd>
+                  </dl>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>Example</h5>
+                  <!-- <div class="hljs"> --><pre><code class="hljs lang-json">{
+  <span class="hljs-attr">&quot;id&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;email&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;facebookId&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;createdAt&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;updatedAt&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;firstName&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;lastName&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;role&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>
 }
 </code></pre>
                   <!-- </div> -->

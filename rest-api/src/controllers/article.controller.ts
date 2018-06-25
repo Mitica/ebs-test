@@ -14,7 +14,7 @@ export async function voteArticleController(req: Request, res: Response) {
         const result = await voteArticleUseCase.execute(inputData);
         sendResponse(res, 200, result);
     } catch (e) {
-        catchError(req, res, e, 400);
+        catchError(req, res, e, 422);
     }
 }
 
@@ -26,7 +26,7 @@ export async function createArticleController(req: Request, res: Response) {
         const article = await articleModel.create(articleData);
         sendResponse(res, 201, article);
     } catch (e) {
-        catchError(req, res, e, 400);
+        catchError(req, res, e, 422);
     }
 }
 
