@@ -23,8 +23,7 @@
     "type": "git",
     "url": "https://github.com/Mitica/ebs-test.git"
   },
-  "keywords": [
-  ],
+  "keywords": [],
   "author": "Dumitru Cantea",
   "license": "ISC",
   "bugs": {

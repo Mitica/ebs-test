@@ -3,7 +3,10 @@
   "version": "0.1.0",
   "description": "EBS test",
   "scripts": {
-    "test": "cd ./domain && npm run test"
+    "test": "cd ./domain && npm run test",
+    "start": "cd ./rest-api && npm run start && cd ../website && npm run start",
+    "build": "cd ./domain && npm run tsc && cd ../data && npm run tsc && cd ../rest-api && npm run tsc && cd ../website && npm run build",
+    "prebuild": "cd ./domain && npm i && cd ../data && npm i && cd ../rest-api && npm i && cd ../website && npm i"
   },
   "engines": {
     "node": ">=8.0.0"
