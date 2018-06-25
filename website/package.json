@@ -6,6 +6,7 @@
     "start": "node ./lib/app.js",
     "dev": "tsc && node ./lib/app.js",
     "build": "npm run tsc && gulp prod && npm run browserify",
+    "prebuild": "npm i",
     "pretest": "npm run clean && npm run tsc",
     "test": "ava --no-cache --verbose  ./lib/*.test.js ./lib/**/*.test.js",
     "posttest": "npm run clean-test-code",

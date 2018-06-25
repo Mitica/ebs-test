@@ -1,6 +1,7 @@
 
 import { generate as generateId, isValid as isValidId } from 'shortid';
 import { CreatingArticle, Article } from './article';
+import { badData } from 'boom';
 
 export class ArticleHelpers {
     static newId() {
@@ -12,7 +13,7 @@ export class ArticleHelpers {
         return isValidId(id);
     }
 
-    static buildForCreate(input: CreatingArticle) {
+    static buildForCreate(input: CreatingArticle | Article) {
         const article: Article = {
             id: ArticleHelpers.newId(),
             title: input.title,
@@ -22,6 +23,14 @@ export class ArticleHelpers {
 
         if (input.body) {
             article.body = input.body;
+        }
+
+        if (!article.title) {
+            throw badData();
+        }
+
+        if (!article.userId) {
+            throw badData();
         }
 
         return article;

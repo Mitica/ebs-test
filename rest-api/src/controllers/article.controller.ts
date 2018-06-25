@@ -19,11 +19,10 @@ export async function voteArticleController(req: Request, res: Response) {
 }
 
 export async function createArticleController(req: Request, res: Response) {
-    const articleData = await InputArticle.fromRequest(req);
-
-    articleData.id = ArticleHelpers.newId();
+    let articleData = await InputArticle.fromRequest(req);
 
     try {
+        articleData = ArticleHelpers.buildForCreate(articleData);
         const article = await articleModel.create(articleData);
         sendResponse(res, 201, article);
     } catch (e) {

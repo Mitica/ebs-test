@@ -5,5 +5,4 @@ node_modules
 *.tgz
 dest
 types
-package-lock.json
 *.log

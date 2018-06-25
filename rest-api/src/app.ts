@@ -11,6 +11,8 @@ import * as cors from 'cors';
 import { notFound } from 'boom';
 import { initData } from './data';
 import { mountRoutes } from './routes';
+import { createWriteStream, existsSync, mkdirSync } from 'fs';
+import * as morgan from 'morgan';
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -20,6 +22,15 @@ function startApp() {
 
     app.disable('x-powered-by');
     app.disable('etag');
+
+    var logDirectory = path.join(__dirname, '..', 'logs');
+
+    // ensure log directory exists
+    existsSync(logDirectory) || mkdirSync(logDirectory);
+
+    app.use(morgan('common', {
+        stream: createWriteStream(path.join(logDirectory, 'access.log'), { flags: 'a' })
+    }));
 
     app.use(cors({ origin: '*' }));
 

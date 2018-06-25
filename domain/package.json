@@ -9,6 +9,8 @@
     "pretest": "npm run clean && npm run tsc",
     "test": "ava --no-cache --verbose dest/**/*.test.js",
     "posttest": "npm run clean-test-code",
+    "build": "tsc",
+    "prebuild": "npm i",
     "tsc": "tsc",
     "tscw": "tsc -w",
     "preversion": "npm run tsc",

@@ -1,5 +1,6 @@
 import { CreatingArticleVote, ArticleVote } from "./article-vote";
 import { md5 } from "../utils";
+import { badData } from "boom";
 
 export class ArticleVoteHelpers {
     static createId(data: CreatingArticleVote) {
@@ -13,6 +14,18 @@ export class ArticleVoteHelpers {
             articleId: input.articleId,
             type: input.type,
             createdAt: input.createdAt || new Date(),
+        }
+
+        if (!vote.articleId) {
+            throw badData();
+        }
+
+        if (!vote.userId) {
+            throw badData();
+        }
+
+        if (!vote.type || ['UP', 'DOWN'].indexOf(vote.type) < 0) {
+            throw badData();
         }
 
         return vote;

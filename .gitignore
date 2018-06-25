@@ -4,5 +4,4 @@
 node_modules
 *.tgz
 types
-package-lock.json
 *.log

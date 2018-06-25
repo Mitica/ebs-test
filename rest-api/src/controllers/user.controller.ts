@@ -25,11 +25,10 @@ export async function getUsersController(req: Request, res: Response) {
 }
 
 export async function createUserController(req: Request, res: Response) {
-    const inputData = InputUser.fromRequest(req);
-
-    inputData.id = UserHelpers.newId();
+    let inputData = InputUser.fromRequest(req);
 
     try {
+        inputData = UserHelpers.buildForCreate(inputData);
         const user = await userModel.create(inputData);
         user.token = jwtSign(user);
         sendResponse(res, 201, user);
