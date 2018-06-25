@@ -39,3 +39,5 @@ Project is written in TypeScript.
 `.env` files are published on github.
 
 Database uri: `mongodb://admin:test-admin10@ds261570.mlab.com:61570/ebs-test`
+
+For dashboard I user server site render and Vuejs on client for calling API.
